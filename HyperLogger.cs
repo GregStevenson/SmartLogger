@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Text.Json;
 using System.Threading;
 
 
@@ -188,15 +189,32 @@ namespace SmartLogger
                 }
                 areas.Add(area);
             }
-            return JsonConvert.SerializeObject(areas);
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true // For pretty-printing the JSON
+            };
+
+            return JsonSerializer.Serialize(areas, options);
+
         }
         public static void UpdateStateFromJSONstring(string json)
         {
-            List<RuntimeHyperArea> areas = (List<RuntimeHyperArea>)JsonConvert.DeserializeObject(json, typeof(List<RuntimeHyperArea>));
+                // Ensure to specify the type to deserialize to, in this case, List<RuntimeHyperArea>
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true // This option helps with deserializing if the JSON property names don't match case with your C# model properties
+                };
 
-            foreach (RuntimeHyperArea area in areas)
+                List<RuntimeHyperArea> areas = JsonSerializer.Deserialize<List<RuntimeHyperArea>>(json, options);
+
+            if (areas != null) // Always a good practice to check for null after deserialization
             {
 
+                foreach (RuntimeHyperArea area in areas)
+                {
+                    // Your logic here
+
+                }
             }
         }
 

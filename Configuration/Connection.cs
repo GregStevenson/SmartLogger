@@ -1,6 +1,4 @@
 ﻿using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace SmartLogger
 {
@@ -41,7 +39,6 @@ namespace SmartLogger
         string connectionName = string.Empty;
         ConnectionTypes connectionType;
 
-        [XmlElement("ConnectionName")]
         public string ConnectionName
         {
             get 
@@ -58,14 +55,12 @@ namespace SmartLogger
             set => connectionName = value;
         }
 
-        [XmlElement("Enabled")]
         public bool Enabled
         {
             get => enabled;
             set => enabled = value;
         }
 
-        [XmlElement("ConnectionType")]
         public ConnectionTypes ConnectionType
         {
             get => connectionType;
@@ -73,21 +68,18 @@ namespace SmartLogger
         }
 
 
-        [XmlElement("FilePath")]
         public string FilePath
         {
             get => filePath;
             set => filePath = value;
         }
 
-        [XmlElement("FileName")]
         public string FileName
         {
             get => fileName;
             set => fileName = value;
         }
 
-        [XmlElement("FileBufferSize")]
         public int FileBufferSize
         {
             get => fileBufferSize;
@@ -95,21 +87,18 @@ namespace SmartLogger
         }
 
 
-        [XmlElement("AppendInsteadOfOverride")]
         public bool AppendInsteadOfOverride
         {
             get => appendInsteadOfOverride;
             set => appendInsteadOfOverride = value;
         }
 
-        [XmlElement("MaximumLogSize")]
         public int MaximumLogSize
         {
             get => maximumLogSize;
             set => maximumLogSize = value;
         }
 
-        [XmlElement("MaximumLogCount")]
         public int MaximumLogCount
         {
             get => maximumLogCount;
@@ -117,7 +106,6 @@ namespace SmartLogger
         }
 
 
-        [XmlElement("Rotate")]
         public LogRotate Rotate
         {
             get => rotate;
@@ -125,7 +113,6 @@ namespace SmartLogger
         }
 
 
-        [XmlElement("EncryptLogs")]
         public bool EncryptLogs
         {
             get => encryptLogs;
@@ -133,133 +120,114 @@ namespace SmartLogger
         }
 
 
-        [XmlElement("EncryptKey")]
         public string EncryptKey
         {
             get => encryptKey;
             set => encryptKey = value;
         }
 
-        [XmlElement("LogLevel")]
         public Level LogLevel
         {
             get => logLevel;
             set => logLevel = value;
         }
 
-        [XmlElement("LogCaption")]
         public string LogCaption
         {
             get => logCaption;
             set => logCaption = value;
         }
 
-        [XmlElement("AutomaticallyReconnect")]
         public bool AutomaticallyReconnect
         {
             get => automaticallyReconnect;
             set => automaticallyReconnect = value;
         }
 
-        [XmlElement("ReconnectInterval")]
         public int ReconnectInterval
         {
             get => reconnectInterval;
             set => reconnectInterval = value;
         }
 
-        [XmlElement("BacklogEnabled")]
         public bool BacklogEnabled
         {
             get => backlogEnabled;
             set => backlogEnabled = value;
         }
 
-        [XmlElement("BacklogQueueSize")]
         public int BacklogQueueSize
         {
             get => backlogQueueSize;
             set => backlogQueueSize = value;
         }
 
-        [XmlElement("FlushOnLevel")]
         public Level FlushOnLevel
         {
             get => flushOnLevel;
             set => flushOnLevel = value;
         }
 
-        [XmlElement("AlwaysKeepConnectionOpen")]
         public bool AlwaysKeepConnectionOpen
         {
             get => alwaysKeepConnectionOpen;
             set => alwaysKeepConnectionOpen = value;
         }
 
-        [XmlElement("AsynchronousEnabled")]
         public bool AsynchronousEnabled
         {
             get => asynchronousEnabled;
             set => asynchronousEnabled = value;
         }
 
-        [XmlElement("AsyncQueueSize")]
         public int AsyncQueueSize
         {
             get => asyncQueueSize;
             set => asyncQueueSize = value;
         }
 
-        [XmlElement("ThrottleApplciation")]
         public bool ThrottleApplciation
         {
             get => throttleApplciation;
             set => throttleApplciation = value;
         }
 
-        [XmlElement("ClearQueueOnDisconnect")]
         public bool ClearQueueOnDisconnect
         {
             get => clearQueueOnDisconnect;
             set => clearQueueOnDisconnect = value;
         }
 
-        [XmlElement("MemoryQueueSize")]
         public int MemoryQueueSize
         {
             get => memoryQueueSize;
             set => memoryQueueSize = value;
         }
 
-        [XmlElement("CreateTextInsteadOfBinary")]
         public bool CreateTextInsteadOfBinary
         {
             get => createTextInsteadOfBinary;
             set => createTextInsteadOfBinary = value;
         }
 
-        [XmlElement("NamedPipe")]
         public string NamedPipe
         {
             get => namedPipe;
             set => namedPipe = value;
         }
 
-        [XmlElement("HostName")]
         public string HostName
         {
             get => hostName;
             set => hostName = value;
         }
 
-        [XmlElement("Port")]
         public int Port
         {
             get => port;
             set => port = value;
         }
 
-        [XmlElement("ConnectionTimeout")]
         public int ConnectionTimeout
         {
             get => connectionTimeout;
@@ -267,7 +235,6 @@ namespace SmartLogger
         }
 
 
-        [XmlElement("PatternString")]
         public string PatternString
         {
             get => patternString;
@@ -276,7 +243,6 @@ namespace SmartLogger
 
 
 
-        [XmlElement("IndentTitle")]
         public bool IndentTitle
         {
             get => indentTitle;

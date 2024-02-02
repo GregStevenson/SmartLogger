@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Xml;
-using System.Xml.Serialization;
 using NLog;
 
 namespace SmartLogger
@@ -15,28 +13,23 @@ namespace SmartLogger
             RuleAreaItems = new List<RuleAreaItem>();
         }
 
-        [XmlElement("Name")]
         public string Name
         {
             get => _name;
             set => _name = value;
         }
-        [XmlElement("Enabled")]
         public bool Enabled
         {
             get => _enabled;
             set => _enabled = value;
         }
 
-        [XmlElement("Priority")]
         public int Priority
         {
             get => _priority;
             set => _priority = value;
         }
 
-        [XmlArray("RuleAreaItems")]
-        [XmlArrayItem("RuleAreaItem")]
         public List<RuleAreaItem> RuleAreaItems;
 
         private static SmartLogger.Level LogLevelToLevel(LogLevel level)

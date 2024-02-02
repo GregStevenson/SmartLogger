@@ -4,12 +4,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
+using System.Text.Json;
 
 namespace SmartLogger
 {
-    [XmlRoot("Configuration")]
     public class Configuration
     {
         private bool enabled = true;
@@ -21,65 +19,51 @@ namespace SmartLogger
         private int minorVersion = 6;
         private int maintVersion = 0;
 
-        [XmlElement("MajorVersion")]
         public int MajorVersion
         {
             get => majorVersion;
             set => majorVersion = value;
         }
-        [XmlElement("MinorVersion")]
         public int MinorVersion
         {
             get => minorVersion;
             set => minorVersion = value;
         }
-        [XmlElement("MaintVersion")]
         public int MaintVersion
         {
             get => maintVersion;
             set => maintVersion = value;
         }
-        [XmlElement("Enabled")]
         public bool Enabled
         {
             get => enabled;
             set => enabled = value;
         }
-        [XmlElement("AppName")]
         public string AppName
         {
             get => appName;
             set => appName = value;
         }
-        [XmlElement("Resolution")]
         public string Resolution
         {
             get => resolution;
             set => resolution = value;
         }
-        [XmlElement("SessionDefaults")]
         public Level SessionDefaults
         {
             get => sessionDefaults;
             set => sessionDefaults = value;
         }
-        [XmlElement("DefaultLevel")]
         public Level DefaultLevel
         {
             get => defaultLevel;
             set => defaultLevel = value;
         }
 
-        [XmlArray("Areas")]
-        [XmlArrayItem("Area")]
         public List<Area> Areas;
 
-        [XmlArray("Connections")]
-        [XmlArrayItem("Connection")]
         public List<Connection> Connections;
 
-        [XmlArray("Rules")]
-        [XmlArrayItem("Rule")]
         public List<Rule> Rules;
 
         public Configuration()
@@ -121,24 +105,21 @@ namespace SmartLogger
         {
             Bootstrap.Log.EnterMethod($"LoadConfiguration: '{configurationFilename}'");
             Configuration result = null;
-            bool production = !configurationFilename.ToLower().Contains("polyworks");
+            bool production = true;
             bool exists = !string.IsNullOrEmpty(configurationFilename) || File.Exists(configurationFilename);
             if (exists)
             {
                 try
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(Configuration));
-                    using (FileStream fileStream = new FileStream(configurationFilename, FileMode.Open))
-                    {
-                        result = (Configuration)serializer.Deserialize(fileStream);
-                        Bootstrap.Log.LogColored(Gurock.SmartInspect.Level.Debug, Color.BurlyWood, result.ConfigurationString());
-                    }
+                    string jsonString = File.ReadAllText(configurationFilename);
+                    result = JsonSerializer.Deserialize<Configuration>(jsonString);
+                    Bootstrap.Log.LogColored(Gurock.SmartInspect.Level.Debug, Color.BurlyWood, result.ConfigurationString());
                 }
                 catch (Exception e)
                 {
                     Bootstrap.Log.LogException(e);
                     Bootstrap.Log.LogWarning($"The configuration file {configurationFilename} could not be parsed. The default configuration is being used.");
-                    result = new Configuration(production); 
+                    result = new Configuration(production);
                 }
             }
             else
@@ -153,16 +134,9 @@ namespace SmartLogger
         {
             try
             {
-                XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(this.GetType());
-                StringWriter xml = new StringWriter();
-                var utf8NoBom = new UTF8Encoding(false);
-                var settings = new XmlWriterSettings();
-                settings.Indent = true;
-                settings.OmitXmlDeclaration = true;
-                settings.Encoding = utf8NoBom;
-                var xmlWriter = XmlWriter.Create(xml, settings);
-                xmlSerializer.Serialize(xmlWriter, this);
-                File.WriteAllText(filename, xml.ToString());
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                string jsonString = JsonSerializer.Serialize(this, options);
+                File.WriteAllText(filename, jsonString);
 
             }
             catch (Exception ex)

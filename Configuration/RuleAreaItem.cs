@@ -1,6 +1,4 @@
-﻿using System.Xml;
-using System.Xml.Serialization;
-
+﻿
 
 namespace SmartLogger
 {
@@ -14,21 +12,18 @@ namespace SmartLogger
 
 
 
-        [XmlElement("Mask")]
         public string Mask
         {
             get => _mask;
             set => _mask = value;
         }
 
-        [XmlElement("Enabled")]
         public bool Enabled
         {
             get => _enabled;
             set => _enabled = value;
         }
 
-        [XmlElement("LoggingLevel")]
         public Level LoggingLevel
         {
             get => _loggingLevel;
@@ -36,7 +31,6 @@ namespace SmartLogger
         }
 
 
-        [XmlElement("DetailLevel")]
         public Level DetailLevel
         {
             get => _detailLevel;

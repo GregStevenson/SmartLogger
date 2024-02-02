@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Text.Json;
 
 namespace SmartLogger
 {
@@ -388,8 +389,14 @@ namespace SmartLogger
         {
             if (_session.IsOn(XlatLevel(level)))
             {
-                JToken parsedJson = JToken.Parse(source);
-                var beautified = parsedJson.ToString(Newtonsoft.Json.Formatting.Indented);
+                    // Parse and then re-serialize with indentation using System.Text.Json
+                    var options = new JsonSerializerOptions
+                    {
+                        WriteIndented = true
+                    };
+
+                    var parsedJson = JsonSerializer.Deserialize<JsonElement>(source);
+                    var beautified = JsonSerializer.Serialize(parsedJson, options);
                 _session.LogSource(XlatLevel(level), msg, beautified, SourceId.JavaScript);
             }
 
