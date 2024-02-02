@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net5.0</TargetFrameworks>
+    <Company>Code Partners Pty Ltd</Company>
+    <Copyright>Copyright 2021 (C) Code Partners</Copyright>
+    <Version>3.4.1.5</Version>
+    <AssemblyName>Gurock.SmartInspect</AssemblyName>
+    <RootNamespace>Gurock.SmartInspect</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net472;net45</TargetFrameworks>
+    <Authors>Greg Stevenson</Authors>
+    <Company>3D Infotech LLC</Company>
+    <Description>This is an internal NuGet package to install SmartInspect logging into 3DI products. It is not for external publication.</Description>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <ApplicationIcon>SmartInspect.ico</ApplicationIcon>
+    <PackageIcon>SmartInspect.png</PackageIcon>
+    <AssemblyVersion>1.0.40.0</AssemblyVersion>
+    <FileVersion>1.0.40.0</FileVersion>
+    <Version>1.0.40</Version>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
+    <PackageIconUrl />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net472|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|AnyCPU'">
+    <OutputPath>bin\Release\net472\</OutputPath>
+  </PropertyGroup>
+
+ 
+  <ItemGroup>
+    <None Include="SmartInspect.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+ 
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
+ 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+    <PackageReference Include="System.Drawing.Common">
+      <Version>8.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Text.Json">
+      <Version>8.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
