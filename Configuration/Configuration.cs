@@ -148,11 +148,20 @@ namespace SmartLogger
 
         private static string DefaultLogFilePath()
         {
-            string companyName = "3D Infotech";
-            string runningApplication = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
-            string filename = System.IO.Path.GetFileNameWithoutExtension(runningApplication);
-            string dataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            return $"{dataPath}\\{companyName}\\{filename}\\logs";
+            string CompanyName = "Fabletown";
+            string AppName = "FableToons";
+            string appBasePath = AppDomain.CurrentDomain.BaseDirectory; // Get the application base directory
+            string folderPath = Path.Combine(appBasePath, "siLogs",CompanyName, AppName); // Combine the base path with the folder name to get the full path
+
+            // Ensure the folder exists
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+
+            return folderPath;
+
         }
 
         public void AddDefaultRules(bool production)
@@ -272,14 +281,48 @@ namespace SmartLogger
 
 
         }
+
+        private string HostRootLoggingFolder()
+        {
+            string folderName = "siLogs"; // The custom folder name
+            string appBasePath = AppDomain.CurrentDomain.BaseDirectory; // Get the application base directory
+            string folderPath = Path.Combine(appBasePath, folderName); // Combine the base path with the folder name to get the full path
+
+            // Ensure the folder exists
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            return folderPath;
+        }
+
+        private string MockConfigurationString()
+        {
+            string DefaultFilePath = Path.Combine(HostRootLoggingFolder(), "log.sil");
+            string DefaultConfiguration = $"pipe(), tcp(host = \"72.234.252.135\", reconnect = \"true\", reconnect.interval = \"60\"), file(filename = \"{DefaultFilePath}\", maxparts = \"300\", rotate = \"hourly\", caption = \"file2\", reconnect = \"true\", reconnect.interval = \"30\")";
+
+            //                return "pipe(caption=smartinspect, reconnect=true, level=debug)";
+            return DefaultConfiguration;
+        }
         public string ConfigurationString(bool forcePaths = true)
         {
             //DefaultConfiguration();
             if (Connections.Count == 0)
             {
-                return "pipe(caption=smartinspect, reconnect=true, level=debug)";
+
+                //                return "pipe(caption=smartinspect, reconnect=true, level=debug)";
+                return MockConfigurationString();
 
             }
+            if (Connections.Count >= 0)
+            {
+
+                //                return "pipe(caption=smartinspect, reconnect=true, level=debug)";
+                return MockConfigurationString();
+
+            }
+
             string fragment = "";
             foreach (Connection connection in Connections)
             {

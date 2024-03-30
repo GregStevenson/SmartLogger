@@ -6,12 +6,12 @@
     <Company>Sierra Blanco Systems</Company>
     <Description>This is an internal NuGet package to install SmartInspect logging into Oqtane projects. It is not for external publication.</Description>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	<PackageOutputPath>F:\NugetPackages\</PackageOutputPath>
+	<PackageOutputPath>C:\MyPackages\</PackageOutputPath>
     <ApplicationIcon>SmartInspect.ico</ApplicationIcon>
     <PackageIcon>SmartInspect.png</PackageIcon>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
-    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.8</AssemblyVersion>
+    <FileVersion>1.0.0.8</FileVersion>
+    <Version>1.0.0.8</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
     <PackageIconUrl />
@@ -40,13 +40,9 @@
   </ItemGroup>
 
  
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8'">
-    <PackageReference Include="System.Drawing.Common">
-      <Version>8.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="System.Text.Json">
-      <Version>8.0.1</Version>
-    </PackageReference>
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="8.0.3" />
+    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
   </ItemGroup>
 
 </Project>

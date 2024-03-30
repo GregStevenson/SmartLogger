@@ -43,13 +43,13 @@ namespace SmartLogger
         public void SetSessionLevel(Level loggerLevel, Level detailLevel)
         {
             Bootstrap.Log.LogColored(Color.PaleGreen, $"!           Session [{_session.Name}] Log: {loggerLevel.ToString()}  Detail: {detailLevel.ToString()}");
-            _session.Active = IsEnabled(loggerLevel) || IsEnabled(detailLevel);
-            _session.Level = XlatLevel(loggerLevel);
-            _traceable = IsTraceable(loggerLevel) || IsTraceable(detailLevel);
-            if (IsEnabled(detailLevel) && !_session.IsOn(XlatLevel(detailLevel)))
-            {
-                _session.Level = XlatLevel(detailLevel);
-            }
+            _session.Active = true; // IsEnabled(loggerLevel) || IsEnabled(detailLevel);
+            _session.Level = Gurock.SmartInspect.Level.Debug; // XlatLevel(loggerLevel);
+            //_traceable = IsTraceable(loggerLevel) || IsTraceable(detailLevel);
+            //if (IsEnabled(detailLevel) && !_session.IsOn(XlatLevel(detailLevel)))
+            //{
+            //    _session.Level = XlatLevel(detailLevel);
+            //}
             Bootstrap.Log.LogColored(Color.LightCyan, $"!           Session [{_session.Name}] Active: {_session.Active.ToString()}  Level: {_session.Level.ToString()}");
 
         }
@@ -203,6 +203,7 @@ namespace SmartLogger
         }
         public void Debug(string msg)
         {
+            Bootstrap.Log.LogColored(Color.LightCyan, $"!           {msg}");
             _session.LogDebug(msg);
         }
         public void Verbose(string msg, Color color)

@@ -2,6 +2,7 @@
 using Gurock.SmartInspect;
 using System;
 using System.Drawing;
+using System.IO;
 
 
 
@@ -42,12 +43,28 @@ namespace SmartLogger
 
         private static string BootstrapLogFilename()
         {
-            return $"{System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName)}\\StartupIssues.txt";
+            string folderName = "StartupLogs"; // The custom folder name
+            string appBasePath = AppDomain.CurrentDomain.BaseDirectory; // Get the application base directory
+            string folderPath = Path.Combine(appBasePath, folderName); // Combine the base path with the folder name to get the full path
+
+            // Ensure the folder exists
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            // Create a timestamped filename
+            string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            string fileName = $"StartupIssues_{timestamp}.txt";
+            string filePath = Path.Combine(folderPath, fileName);
+
+            return filePath;
+           // return $"{System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName)}\\StartupIssues.txt";
         }
         private static void GetCommandLineArguments()
         {
             appendLog = false;
-            details = false;
+            details = true; // default to true for initial testing
             clearLog = false;
             string[] arguments = Environment.GetCommandLineArgs();
             foreach (string item in arguments)
@@ -86,7 +103,7 @@ namespace SmartLogger
                 {
                     GetCommandLineArguments();
                     smartInspect = new SmartInspect(Configuration.PlainAppFilename() + ".BootStrap");
-                    smartInspect.Connections = $"text(append=\"{appendLog}\", filename=\"{BootstrapLogFilename()}\"), pipe(pipename=smartinspect, reconnect=true, reconnect.interval=1)";
+                    smartInspect.Connections = $"text(append=\"{appendLog}\", filename=\"{BootstrapLogFilename()}\"), tcp(host=\"72.234.252.135\", reconnect=\"true\", reconnect.interval=\"60\")";
                     smartInspect.Enabled = true;
                     session = smartInspect.AddSession("StartupIssues");
                     session.Color = Color.Tomato;

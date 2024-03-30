@@ -48,23 +48,25 @@ namespace SmartLogger
         {
             get
             {
-                if (_DetailLevel == Level.Standby)
-                {
-                    return _hyperarea;
-                }
-                else if (_DetailLevel == Level.Off)
-                {
-                    return null;
-                }
-                else
-                if (_hyperarea.SiSession.IsOn(HyperArea.XlatLevel(_DetailLevel)))
-                {
-                    return _hyperarea;
-                }
-                else
-                {
-                    return null;
-                }
+                //return _hyperarea; // for now always return.
+                return null; // for now always return.
+                //if (_DetailLevel == Level.Standby)
+                //{
+                //    return _hyperarea;
+                //}
+                //else if (_DetailLevel == Level.Off)
+                //{
+                //    return null;
+                //}
+                //else
+                //if (_hyperarea.SiSession.IsOn(HyperArea.XlatLevel(_DetailLevel)))
+                //{
+                //    return _hyperarea;
+                //}
+                //else
+                //{
+                //    return null;
+                //}
             }
         }
 
@@ -102,9 +104,9 @@ namespace SmartLogger
 
         public void SetHyperLogLevels(Level loggerLevel, Level detailLevel)
         {
-            _LoggerLevel = loggerLevel;
-            _DetailLevel = detailLevel;
-            Bootstrap.Log.LogColored (Color.LightPink, $"!           Rule [{Name}] Log: {_LoggerLevel.ToString()}  Detail: {_DetailLevel.ToString()}");
+            _LoggerLevel = Level.Debug; //loggerLevel;For now, always set to debug
+            _DetailLevel = Level.Debug; // detailLevel; For now, always set to debug
+            Bootstrap.Log.LogColored (Color.LightPink, $"!           RuleY [{Name}] Log: {_LoggerLevel.ToString()}  Detail: {_DetailLevel.ToString()}");
             _hyperarea.SetSessionLevel(loggerLevel, detailLevel);  
         }
 
